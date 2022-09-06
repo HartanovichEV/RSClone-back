@@ -1,11 +1,7 @@
 import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
 import { IUser } from '../interfaces/IUser';
-
-const usersDB = {
-  users: require('../../data/users.json') as IUser[],
-  setUsers: function (data: IUser[]) {this.users = data}
-}
+import { usersDB } from '../model/usersDB';
 
 require('dotenv').config();
 const fsPromises  = require('fs').promises;
@@ -29,7 +25,8 @@ const handleLogin = async (req: Request, res: Response) => {
       "login": foundUser.login,
       "name": foundUser.name,
       "email": foundUser.email,
-      "avatar": foundUser.avatar
+      "avatar": foundUser.avatar,
+      "goodThings": foundUser.goodThings
     },
     process.env.ACCESS_TOKEN_SECRET as string,
     { expiresIn: '15m'}

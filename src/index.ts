@@ -2,7 +2,6 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
-
 const verifyJWT = require('./middleware/verifyJWT');
 const jsonParser = require('body-parser').json();;
 const cookieParser = require('cookie-parser');
@@ -16,15 +15,19 @@ app.use(cors());
 app.use(cookieParser());
 
 
-app.use('/register', jsonParser, require('./routes/register'));
+
+app.use('/register', require('./routes/register'));
 app.use('/auth', jsonParser, require('./routes/auth'));
 app.use('/refresh', jsonParser, require('./routes/refresh'));
-
 app.use('/logout', jsonParser, require('./routes/logout'));
-app.use('/apply', jsonParser, require('./routes/apply'));
 app.use('/user', jsonParser, require('./routes/users'));
 app.use('/avatar', jsonParser, require('./routes/avatar'));
+app.use('/apply', jsonParser, require('./routes/apply'));
+app.use('/thanks', jsonParser, require('./routes/thanks'));
+app.use('/all-data', jsonParser, require('./routes/allData'));
 app.use(verifyJWT);
+
+app.use('/participate', jsonParser, require('./routes/participate'));
 app.get('/', (req: Request, res: Response) => {
   return res.sendStatus(200);
 });
